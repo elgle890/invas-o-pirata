@@ -15,6 +15,13 @@ class Cannon {
     image(this.image, this.x, this.y, this.width, this.height);
     pop();
     image(this.baseImage, 70, 20, 200, 200);
+
+    if(keyIsDown(UP_ARROW)) {
+      this.angle = this.angle + 1;
+    }
+    if(keyIsDown(DOWN_ARROW)) {
+      this.angle = this.angle - 1;
+    }
   }
   
 }
