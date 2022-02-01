@@ -10,18 +10,20 @@ class Cannon {
   }
 
   display() {
-    push();
-    imageMode(CENTER);
-    image(this.image, this.x, this.y, this.width, this.height);
-    pop();
-    image(this.baseImage, 70, 20, 200, 200);
-
-    if(keyIsDown(UP_ARROW)) {
+    if(keyIsDown(UP_ARROW) && this.angle < 70) {
       this.angle = this.angle + 1;
     }
-    if(keyIsDown(DOWN_ARROW)) {
+    if(keyIsDown(DOWN_ARROW) && this.angle > -30) {
       this.angle = this.angle - 1;
     }
+
+    push();
+    imageMode(CENTER);
+    translate(this.x, this.y);
+    rotate(this.angle);
+    image(this.image, 0, 0, this.width, this.height);
+    pop();
+    image(this.baseImage, 70, 20, 200, 200);
   }
   
 }

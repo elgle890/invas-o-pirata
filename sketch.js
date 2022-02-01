@@ -36,6 +36,8 @@ function setup() {
   tower = Bodies.rectangle(160, 350, 160, 310, options);
   World.add(world, tower);
 
+
+  angleMode(DEGREES);
 }
 
 function draw() {
@@ -53,4 +55,10 @@ function draw() {
   imageMode(CENTER);
   image(towerImage,tower.position.x, tower.position.y, 160, 310);
   pop();  
+}
+
+function keyReleased() {
+  if (RIGHT_ARROW) {
+    cannonBall.shoot();
+  }
 }
