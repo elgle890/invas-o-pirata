@@ -7,6 +7,8 @@ var engine, world, backgroundImg;
 
 var canvas, angle, tower, ground, cannon, cannonBall;
 var cannonImage, cannon2Image;
+var ball = [];
+
 
 function preload() {
   backgroundImg = loadImage("./assets/background.gif");
@@ -61,4 +63,8 @@ function keyReleased() {
   if (RIGHT_ARROW) {
     cannonBall.shoot();
   }
+}
+
+function keyPressed() {
+  
 }
