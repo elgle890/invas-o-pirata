@@ -7,7 +7,7 @@ var engine, world, backgroundImg;
 
 var canvas, angle, tower, ground, cannon, cannonBall;
 var cannonImage, cannon2Image;
-var ball = [];
+var balls = [];
 
 
 function preload() {
@@ -25,7 +25,7 @@ function setup() {
   world = engine.world;
 
   cannon = new Cannon(180, 110, 130, 100, 20, cannon2Image, cannonImage);
-  cannonBall = new CannonBall(cannon.x, cannon.y);
+  
   
   
   var options = {
@@ -50,7 +50,10 @@ function draw() {
   rect(ground.position.x, ground.position.y, width * 2, 1);
 
   cannon.display();
-  cannonBall.display();
+  
+  for(var i = 0; i < balls.length; i++) {
+    showCannonBalls(balls[i]);
+  }
   
 
   push();
@@ -66,5 +69,16 @@ function keyReleased() {
 }
 
 function keyPressed() {
+
+    if(DOWN_ARROW) {
+      cannonBall = new CannonBall(cannon.x, cannon.y);
+      balls.push(cannonBall);
+    }
   
+}
+
+function showCannonBalls(ball) {
+  if(ball) {
+    ball.display();
+  }
 }

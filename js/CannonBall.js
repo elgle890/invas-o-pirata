@@ -11,6 +11,8 @@ class CannonBall {
         World.add(world, this.circle);
 
         this.image = loadImage("./assets/cannonball.png");
+
+        this.way = [];
     }
 
     display() {
@@ -19,6 +21,17 @@ class CannonBall {
         imageMode(CENTER);
         image(this.image, pos.x, pos.y, this.raio, this.raio);
         pop(); 
+
+        if(this.circle.position.x > 0 && this.circle.position.x > 300 && this.circle.position.y < 565) {
+            var position = [this.circle.position.x, this.circle.position.y];
+            this.way.push(position);
+
+        }
+
+        console.log(this.way);
+        for(var z = 0; z < this.way.length; z++) {
+            image(this.image, this.way[z][0], this.way[z][1], 5, 5);
+        }
     }
 
     shoot() {
