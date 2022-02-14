@@ -26,5 +26,13 @@ class Boat {
         pop();
     }
     
+    remove(index) {
+        if (groupBoat[index]) {
+            World.remove(world, groupBoat[index].body);
+            setTimeout(() => {
+                delete groupBoat[index];
+            }, 1000);  
+        }
+    }
 
 }

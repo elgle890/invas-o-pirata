@@ -58,6 +58,7 @@ function draw() {
   
   for(var i = 0; i < balls.length; i++) {
     showCannonBalls(balls[i]);
+    collisionWithBoat(i);
   }
   
 
@@ -89,13 +90,15 @@ function showCannonBalls(ball) {
 }
 
 function showBoats() {
-  if(groupBoat.length > 0) {
-    if(groupBoat[groupBoat.length-1].body.position.x < width - 300) {
-      var positions = [-4, -60, -70, -20];
-      var position = random(positions);
-      var boat = new Boat(width, height-100, 170, 170, position);
+  if (groupBoat.length > 0) {
+    if (groupBoat[groupBoat.length - 1]) {
+      if(groupBoat[groupBoat.length-1].body.position.x < width - 300) {
+        var positions = [-4, -60, -70, -20];
+        var position = random(positions);
+        var boat = new Boat(width, height-100, 170, 170, position);
 
-      groupBoat.push(boat);
+        groupBoat.push(boat);
+      }
     }
 
     for(var y = 0; y < groupBoat.length; y++) {
@@ -109,5 +112,15 @@ function showBoats() {
 
     groupBoat.push(boat);
   }
-  console.log("oi");
+}
+
+function collisionWithBoat(index) {
+  for (var i = 0; i < groupBoat.length; i++){
+    if (groupBoat[i] !== undefined && balls[index] !== undefined) {
+      var collision = Matter.SAT.collides(balls[index].circle, groupBoat[i].body);
+      if (collision.collided) {
+        groupBoat[i].remove(i);
+      }
+    }
+  }
 }
