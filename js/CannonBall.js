@@ -28,7 +28,7 @@ class CannonBall {
 
         }
 
-        console.log(this.way);
+        
         for(var z = 0; z < this.way.length; z++) {
             image(this.image, this.way[z][0], this.way[z][1], 5, 5);
         }

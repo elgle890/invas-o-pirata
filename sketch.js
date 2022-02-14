@@ -8,6 +8,7 @@ var engine, world, backgroundImg;
 var canvas, angle, tower, ground, cannon, cannonBall;
 var cannonImage, cannon2Image;
 var balls = [];
+var groupBoat = [];
 
 
 function preload() {
@@ -25,8 +26,8 @@ function setup() {
   world = engine.world;
 
   cannon = new Cannon(180, 110, 130, 100, 20, cannon2Image, cannonImage);
-  
-  
+
+ 
   
   var options = {
     isStatic: true
@@ -50,6 +51,10 @@ function draw() {
   rect(ground.position.x, ground.position.y, width * 2, 1);
 
   cannon.display();
+
+  showBoats();
+
+
   
   for(var i = 0; i < balls.length; i++) {
     showCannonBalls(balls[i]);
@@ -81,4 +86,28 @@ function showCannonBalls(ball) {
   if(ball) {
     ball.display();
   }
+}
+
+function showBoats() {
+  if(groupBoat.length > 0) {
+    if(groupBoat[groupBoat.length-1].body.position.x < width - 300) {
+      var positions = [-4, -60, -70, -20];
+      var position = random(positions);
+      var boat = new Boat(width, height-100, 170, 170, position);
+
+      groupBoat.push(boat);
+    }
+
+    for(var y = 0; y < groupBoat.length; y++) {
+      if(groupBoat[y]) {
+        groupBoat[y].display();
+        Matter.Body.setVelocity(groupBoat[y].body, {x:-0.9, y:0 });
+      }
+    }
+  } else {
+    var boat = new Boat(width, height-60, 170, 170, -80);
+
+    groupBoat.push(boat);
+  }
+  console.log("oi");
 }
