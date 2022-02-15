@@ -44,4 +44,15 @@ class CannonBall {
         Matter.Body.setStatic(this.circle, false);
         Matter.Body.setVelocity(this.circle, { x: velocity.x * (180 / 3.14), y: velocity.y * (180 / 3.14) });
     }
+
+
+    remove(index) {
+        if(balls[index]) {
+            Matter.Body.setVelocity(balls[index].circle, {x: 0, y: 0});
+            World.remove(world, balls[index].circle);
+            setTimeout( () => {
+                delete balls[index]
+            },1000);
+        }
+    }
 }
