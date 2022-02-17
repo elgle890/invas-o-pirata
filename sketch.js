@@ -11,6 +11,8 @@ var balls = [];
 var groupBoat = [];
 var boatAnimation = [];
 var boatSpriteData, boatSpriteSheet;
+var wreckAnimation = [];
+var wreckJson, wreckSpriteSheet;
 
 
 function preload() {
@@ -21,6 +23,8 @@ function preload() {
   cannon2Image = loadImage("./assets/canon.png");
   boatSpriteData = loadJSON("./assets/boat/ship-sailing.json");
   boatSpriteSheet = loadImage("./assets/boat/ship-sailing.png");
+  wreckJson = loadJSON("./assets/boat/broken-ship-01.json");
+  wreckSpriteSheet = loadImage("./assets/boat/broken-ship-01.png");
 }
 
 function setup() {
@@ -52,6 +56,20 @@ function setup() {
     var img = boatSpriteSheet.get(pos.x, pos.y, pos.w, pos.h);
     boatAnimation.push(img);
   }
+
+  
+
+  var wreckFrames = wreckJson.frames;
+
+ 
+  for(var i = 0; i < wreckFrames.length; i++) {
+    var pos = wreckFrames[i].position;
+    console.log(pos);
+    var img = wreckSpriteSheet.get(pos.x, pos.y, pos.w, pos.h);
+    wreckAnimation.push(img);
+  }
+
+  
 }
 
 function draw() {

@@ -32,10 +32,14 @@ class Boat {
     
     remove(index) {
         if (groupBoat[index]) {
+            this.animation = wreckAnimation;
+            this.speed = 0.05;
+            this.width = 300;
+            this.height = 300;
             World.remove(world, groupBoat[index].body);
             setTimeout(() => {
                 delete groupBoat[index];
-            }, 1000);  
+            }, 2000);  
         }
     }
 
