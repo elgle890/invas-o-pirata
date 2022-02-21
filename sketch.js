@@ -34,8 +34,6 @@ function setup() {
   world = engine.world;
 
   cannon = new Cannon(180, 110, 130, 100, 20, cannon2Image, cannonImage);
-
- 
   
   var options = {
     isStatic: true
@@ -162,4 +160,20 @@ function collisionWithBoat(index) {
       }
     }
   }
+}
+
+function gameOver(){
+  swal({
+    title: "Fim de Jogo!!!",
+    text: "Obrigada por jogar!",
+    imageUrl: "https://raw.githubusercontent.com/whitehatjr/PiratesInvasion/main/assets/boat.png",
+    imageSize:"150x150",
+    confirmButtonText: "jogar novamente"
+  },
+  function(isConfirm) {
+    if(isConfirm){
+      location.reload();
+    }
+  }
+  );
 }

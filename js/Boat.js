@@ -11,6 +11,7 @@ class Boat {
 
         this.body = Bodies.rectangle(x, y, width, height);
         World.add(world, this.body);
+        this.isBroken = false;
     }
 
     animate() {
@@ -36,6 +37,7 @@ class Boat {
             this.speed = 0.05;
             this.width = 300;
             this.height = 300;
+            this.isBroken = true;
             World.remove(world, groupBoat[index].body);
             setTimeout(() => {
                 delete groupBoat[index];
