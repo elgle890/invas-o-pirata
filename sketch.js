@@ -13,6 +13,10 @@ var boatAnimation = [];
 var boatSpriteData, boatSpriteSheet;
 var wreckAnimation = [];
 var wreckJson, wreckSpriteSheet;
+var boatCollision;
+var evilLaught, backGroundSound, cannonShot;
+var isLaughing = false;
+var pontuacao = 0;
 
 
 function preload() {
@@ -25,6 +29,9 @@ function preload() {
   boatSpriteSheet = loadImage("./assets/boat/ship-sailing.png");
   wreckJson = loadJSON("./assets/boat/broken-ship-01.json");
   wreckSpriteSheet = loadImage("./assets/boat/broken-ship-01.png");
+  evilLaught = loadSound("./assets/pirate_laugh.mp3");
+  backGroundSound = loadSound("./assets/background_music.mp3");
+  cannonShot = loadSound("./assets/cannon_explosion.mp3");
 }
 
 function setup() {
@@ -32,6 +39,8 @@ function setup() {
   canvas = createCanvas(1200, 600);
   engine = Engine.create();
   world = engine.world;
+
+  
 
   cannon = new Cannon(180, 110, 130, 100, 20, cannon2Image, cannonImage);
   
@@ -62,7 +71,6 @@ function setup() {
  
   for(var i = 0; i < wreckFrames.length; i++) {
     var pos = wreckFrames[i].position;
-    console.log(pos);
     var img = wreckSpriteSheet.get(pos.x, pos.y, pos.w, pos.h);
     wreckAnimation.push(img);
   }
@@ -81,6 +89,12 @@ function draw() {
 
   showBoats();
 
+  textSize(40);
+  text(`pontuação: ${pontuacao}`, width-400, 50);
+
+  
+
+
 
   
   for(var i = 0; i < balls.length; i++) {
@@ -88,6 +102,10 @@ function draw() {
     collisionWithBoat(i);
   }
   
+  if(!backGroundSound.isPlaying()) {
+    backGroundSound.play();
+    backGroundSound.setVolume(0.1);
+  }
 
   push();
   imageMode(CENTER);
@@ -96,8 +114,9 @@ function draw() {
 }
 
 function keyReleased() {
-  if (RIGHT_ARROW) {
+  if (keyCode == 32) {
     cannonBall.shoot();
+    cannonShot.play();
   }
 }
 
@@ -106,14 +125,16 @@ function keyPressed() {
     if(DOWN_ARROW) {
       cannonBall = new CannonBall(cannon.x, cannon.y);
       balls.push(cannonBall);
+      
     }
+
+    
   
 }
 
 function showCannonBalls(ball, index) {
   if(ball) {
     ball.display();
-    console.log(ball.circle.position.y);
     if(ball.circle.position.x >= width || ball.circle.position.y >= height - 50) {
       ball.remove(index);
     }
@@ -140,6 +161,19 @@ function showBoats() {
         groupBoat[y].display();
         groupBoat[y].animate();
         Matter.Body.setVelocity(groupBoat[y].body, {x:-0.9, y:0 });
+
+        boatCollision = Matter.SAT.collides(tower, groupBoat[y].body);
+
+        if(boatCollision.collided && !groupBoat[y].isBroken) {
+          
+          if(!isLaughing) {
+            evilLaught.play();
+            isLaughing = true;
+          }
+          
+          gameOver();
+
+        }
       }
     }
   } else {
@@ -157,6 +191,8 @@ function collisionWithBoat(index) {
       if (collision.collided) {
         groupBoat[i].remove(i);
         balls[index].remove(index);
+
+        pontuacao += 5;
       }
     }
   }

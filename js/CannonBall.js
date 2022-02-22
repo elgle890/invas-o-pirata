@@ -17,11 +17,16 @@ class CannonBall {
 
     display() {
         var pos =  this.circle.position;
-        push();
-        imageMode(CENTER);
-        image(this.image, pos.x, pos.y, this.raio, this.raio);
-        pop(); 
+        console.log(this.circle.position.x);
+       
+        if(this.circle.position.x > 196) {
+            push();
+            imageMode(CENTER);
+            image(this.image, pos.x, pos.y, this.raio, this.raio);
+            pop(); 
 
+        }
+        
         if(this.circle.position.x > 0 && this.circle.position.x > 300 && this.circle.position.y < 565) {
             var position = [this.circle.position.x, this.circle.position.y];
             this.way.push(position);
